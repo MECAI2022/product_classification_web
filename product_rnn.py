@@ -26,7 +26,7 @@ with open('tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 
 # stopwords
-@st.cache(allow_output_mutation=True)
+@st.cache()
 def stopbr():
   f = open("stopwords.txt", "r")
   stopwords = [x[:-1] for x in f]
