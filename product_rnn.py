@@ -8,6 +8,8 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import Model
 import tensorflow_addons as tfa
 import pickle
+import nltk
+from nltk.corpus import stopwords
 from PIL import Image
 
 # ler o json
@@ -49,10 +51,33 @@ text = st.sidebar.text_input("NOME DO ITEM", 'Biscoito de Chocolate')
 
 # Função para limpar o dataset
 def remove_stopwords(sentence):
-  # Converting to Lowercase
-  sentence = sentence.lower()
 
-  return sentence
+    # List of stopwords
+    stopwords = nltk.corpus.stopwords.words('portuguese')
+
+    # Remove all the special characters
+    sentence = re.sub(r'\W', ' ', str(sentence))
+
+    # remove all single characters
+    sentence = re.sub(r'\s+[a-zA-Z]\s+', ' ', sentence)
+
+    # Remove single characters from the start
+    sentence = re.sub(r'\^[a-zA-Z]\s+', ' ', sentence) 
+    
+    # Substituting multiple spaces with single space
+    sentence = re.sub(r'\s+', ' ', sentence, flags=re.I)
+
+    # Removing prefixed 'b'
+    sentence = re.sub(r'^b\s+', '', sentence)
+    
+    # Converting to Lowercase
+    sentence = sentence.lower()
+
+    words = sentence.split()
+    no_words = [w for w in words if w not in stopwords]
+    sentence = " ".join(no_words)
+
+    return sentence
 
 btn_predict = st.sidebar.button("REALIZAR CASSIFICAÇÃO")
 
