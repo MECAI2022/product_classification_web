@@ -1,0 +1,4 @@
+numpy~=1.21.4
+streamlit~=1.13.0
+tensorflow==2.10.0
+tensorflow_addons==0.18.0
