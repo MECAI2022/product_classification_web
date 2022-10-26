@@ -20,13 +20,17 @@ label_categoria = np.sort(np.array(produtos['categoria']))
 label_subcategoria = np.sort(np.array(produtos['subcategoria']))
 label_produto = np.sort(np.array(produtos['produto']))
 
-# Abringo o Tokenizador
+# Abrindo o Tokenizador
 with open('tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 
 # carregando o modelo
-pesos = "product_rnn.h5"
-model = tf.keras.models.load_model(pesos)
+@st.cache(allow_output_mutation=True)
+def load_model():
+    model = tf.keras.models.load_model("product_rnn.h5")
+    return model
+    
+model = load_model()
 
 # Dimensão do Embbeding.
 EMBEDDING_DIM = 100
@@ -45,9 +49,9 @@ st.image(img)
 st.text(" ")
 st.text(" ")
 
-# CREATE ADDRESS
-st.sidebar.header('User Input Features')
-text = st.sidebar.text_input("Product Name", 'Macarrão')
+# Texto do item
+st.sidebar.header('Entrada do Texto')
+text = st.sidebar.text_input("NOME DO ITEM", 'Biscoito de Chocolate')
 
 # Função para limpar o dataset
 def remove_stopwords(sentence):
@@ -56,14 +60,18 @@ def remove_stopwords(sentence):
 
   return sentence
 
-btn_predict = st.sidebar.button("REALIZAR PREDIÇÃO")
+btn_predict = st.sidebar.button("REALIZAR CASSIFICAÇÃO")
 
 if btn_predict:
   new_complaint = remove_stopwords(text)
   seq = tokenizer.texts_to_sequences([new_complaint])
   padded = pad_sequences(seq, maxlen=MAX_SEQUENCE_LENGTH)
   pred = model.predict(padded)
-  st.header(f'Segmento: {label_segmento[np.argmax(pred[0])]}')
-  st.header(f'Categoria: {label_categoria[np.argsort(pred[1].flatten())[::-1]][:3]}')
-  st.header(f'Subcategoria: {label_subcategoria[np.argsort(pred[2].flatten())[::-1]][:5]}')
-  st.header(f'Produto: {label_produto[np.argsort(pred[3].flatten())[::-1]][:5]}')
+  st.header(f'Segmento:')
+  st.text(label_segmento[np.argmax(pred[0])])
+  st.header('Categoria:')
+  st.text(label_categoria[np.argsort(pred[1].flatten())[::-1]][:3])
+  st.header('Subcategoria:')
+  st.text(label_subcategoria[np.argsort(pred[2].flatten())[::-1]][:3])
+  st.header('Produto:')
+  st.text(label_produto[np.argsort(pred[3].flatten())[::-1]][:5])
