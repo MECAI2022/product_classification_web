@@ -32,14 +32,8 @@ def load_model():
     
 model = load_model()
 
-# Dimensão do Embbeding.
-EMBEDDING_DIM = 100
-
 # Número máximo que sequência que a rede neural irá utilizar
 MAX_SEQUENCE_LENGTH = 15
-
-# O número máximo de palavras a serem usadas. (mais frequente)
-MAX_NB_WORDS = 28000
 
 st.title('Short Text Product Classification')
 
