@@ -25,14 +25,6 @@ label_produto = np.sort(np.array(produtos['produto']))
 with open('tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 
-# stopwords
-def stopbr():
-  f = open("stopwords.txt", "r")
-  stopwords = [x[:-1] for x in f]
-  return stopwords
-
-stopwords = stopbr()
-
 # carregando o modelo
 @st.cache(allow_output_mutation=True)
 def load_model():
@@ -77,11 +69,7 @@ def remove_stopwords(sentence, stopwords):
     
     # Converting to Lowercase
     sentence = sentence.lower()
-
     words = sentence.split()
-    no_words = [w for w in words if w not in stopwords]
-    sentence = " ".join(no_words)
-
     sentence = unidecode.unidecode(sentence)
 
     return sentence
