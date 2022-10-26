@@ -77,7 +77,7 @@ def remove_stopwords(sentence, stopwords):
 btn_predict = st.sidebar.button("REALIZAR CASSIFICAÇÃO")
 
 if btn_predict:
-  new_complaint = remove_stopwords(text, stopwords)
+  new_complaint = remove_stopwords(text)
   seq = tokenizer.texts_to_sequences([new_complaint])
   padded = pad_sequences(seq, maxlen=MAX_SEQUENCE_LENGTH)
   pred = model.predict(padded)
