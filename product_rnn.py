@@ -49,7 +49,7 @@ st.sidebar.header('Entrada do Texto')
 text = st.sidebar.text_input("NOME DO ITEM", 'Biscoito de Chocolate')
 
 # Função para limpar o dataset
-def remove_stopwords(sentence, stopwords):
+def remove_stopwords(sentence):
 
     # List of stopwords
     # Remove all the special characters
