@@ -8,8 +8,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import Model
 import tensorflow_addons as tfa
 import pickle
-import nltk
-from nltk.corpus import stopwords
+import unidecode
 from PIL import Image
 
 # ler o json
@@ -25,6 +24,15 @@ label_produto = np.sort(np.array(produtos['produto']))
 # Abrindo o Tokenizador
 with open('tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
+
+# stopwords
+@st.cache(allow_output_mutation=True)
+def stopbr():
+  f = open("stopwords.txt", "r")
+  stopwords = [x[:-1] for x in f]
+  return stopwords
+
+stopwords = stopbr()
 
 # carregando o modelo
 @st.cache(allow_output_mutation=True)
@@ -50,11 +58,9 @@ st.sidebar.header('Entrada do Texto')
 text = st.sidebar.text_input("NOME DO ITEM", 'Biscoito de Chocolate')
 
 # Função para limpar o dataset
-def remove_stopwords(sentence):
+def remove_stopwords(sentence, stopwords):
 
     # List of stopwords
-    stopwords = nltk.corpus.stopwords.words('portuguese')
-
     # Remove all the special characters
     sentence = re.sub(r'\W', ' ', str(sentence))
 
@@ -77,12 +83,14 @@ def remove_stopwords(sentence):
     no_words = [w for w in words if w not in stopwords]
     sentence = " ".join(no_words)
 
+    sentence = unidecode.unidecode(sentence)
+
     return sentence
 
 btn_predict = st.sidebar.button("REALIZAR CASSIFICAÇÃO")
 
 if btn_predict:
-  new_complaint = remove_stopwords(text)
+  new_complaint = remove_stopwords(text, stopwords)
   seq = tokenizer.texts_to_sequences([new_complaint])
   padded = pad_sequences(seq, maxlen=MAX_SEQUENCE_LENGTH)
   pred = model.predict(padded)
