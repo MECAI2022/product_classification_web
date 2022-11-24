@@ -1,8 +1,7 @@
-from flask import Flask
-app = Flask (__name__)
+from flask import Flask, jsonify
+app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return "<h1>Short Classification/h1>"
-app.run()
-
+@app.route('/predict', methods=['GET', 'POST'])
+def predict():
+    return jsonify({'class_id': 'IMAGE_NET_XXX', 'class_name': 'Cat'})
+    
