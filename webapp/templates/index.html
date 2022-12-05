@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>ShortText</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static',filename='styles/main.css') }}" /> 
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Sidebar -->
+			<section id="sidebar">
+				<div class="inner">
+					<nav>
+						<ul>
+							<li><a href="#intro">ShortText </a></li>
+							<li><a href="#three">Ferramenta</a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Intro -->
+					<section id="intro" class="wrapper style1 fullscreen fade-up">
+						
+						<div class="inner">
+							<img src="{{url_for('static', filename='imgs/logo.png')}}" width="200px" height="auto">
+							<h1>ShortText</h1>
+							<p>Desenvolvido por alunos do MECAI-ICMC-USP</p>
+							
+						</div>
+					</section>
+
+			
+
+				<!-- Three -->
+					<section id="three" class="wrapper style1 fade-up">
+						<div class="inner">
+							<h2>Ferramenta</h2>
+							
+							<div class="split style2">
+								<section>
+									<form method="post" action="#">
+										<div class="field">
+											<label for="message">Enviar um arquivo CSV</label>
+											<input type="file" id="myFile" name="filename">
+											
+										</div><br>
+										<div class="fields">
+														
+											<div class="field">
+												<label for="message">Ou insira seu texto aqui</label>
+												<textarea name="message" id="message" rows="5"></textarea>
+											</div>
+											
+										</div>
+										<select name="demo-category" id="demo-category">
+											<option value="">- Selecione o modelo -</option>
+											<option value="1">Bert </option>
+											<option value="1">LSTM</option>
+										
+										</select>
+										<Br>
+										<ul class="actions">
+											<li><a href="" class="button submit">Analisar</a></li>
+										</ul>
+									</form>
+								</section>
+								<section>
+									<ul class="contact">
+																					
+											<div class="field">
+												<label for="message">Saída</label>
+												<textarea name="message" id="message" rows="5"></textarea>
+											</div>						
+									</ul>
+								</section>
+							</div>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper style1-alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; ICMC - USP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{{ url_for('static',filename='scripts/jquery.min.js') }}"></script> 
+			
+			<script src="{{ url_for('static',filename='scripts/jquery.scrollex.min.js') }}"></script> 
+			<script src="{{ url_for('static',filename='scripts/jquery.scrolly.min.js') }}"></script> 
+			<script src="{{ url_for('static',filename='scripts/browser.min.js') }}"></script> 
+			<script src="{{ url_for('static',filename='scripts/breakpoints.min.js') }}"></script> 
+			<script src="{{ url_for('static',filename='scripts/util.js') }}"></script> 
+			<script src="{{ url_for('static',filename='scripts/main.js') }}"></script> 
+
+	</body>
+</html>
