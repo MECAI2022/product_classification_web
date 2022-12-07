@@ -11,6 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ url_for('static',filename='styles/main.css') }}" /> 
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		
 	</head>
 	<body class="is-preload">
 
@@ -46,41 +47,53 @@
 					<section id="three" class="wrapper style1 fade-up">
 						<div class="inner">
 							<h2>Ferramenta</h2>
+							<form name="csvimportdataform" id="csvimportdataform">
+								<input 
+									type="file" 
+									name="csvfile" 
+									id="csvfile" 
+									class="form-control-file"
+								/>
+								<button
+									type="submit"
+									name="importdata" 
+									id="importdata" 
+									class="btn btn-info" 
+								>Carregar arquivo</button>
+							</form>
 							
 							<div class="split style2">
 								<section>
-									<form method="post" action="#">
-										<div class="field">
-											<label for="message">Enviar um arquivo CSV</label>
-											<input type="file" id="myFile" name="filename">
-											
-										</div><br>
-										<div class="fields">
-														
-											<div class="field">
-												<label for="message">Ou insira seu texto aqui</label>
-												<textarea name="message" id="message" rows="5"></textarea>
-											</div>
-											
-										</div>
-										<select name="demo-category" id="demo-category">
+																
+									
+									<select name="mymodel" id="mymodel">
 											<option value="">- Selecione o modelo -</option>
 											<option value="1">Bert </option>
-											<option value="1">LSTM</option>
+											<option value="2">LSTM</option>
 										
 										</select>
 										<Br>
-										<ul class="actions">
-											<li><a href="" class="button submit">Analisar</a></li>
-										</ul>
-									</form>
+									
+									
+									<div class="fields">
+														
+										<div class="field">
+											<form >
+												<label for="mytext">Insira seu texto abaixo:</label>
+												<textarea id="mytext" name="mytext" cols="40" rows="5"></textarea>
+												<br>
+												<button type="button" class="button" onclick="sendText()">Analisar</button>
+										    </form>
+										</div>
+										
+									</div>
 								</section>
 								<section>
 									<ul class="contact">
 																					
-											<div class="field">
-												<label for="message">Saída</label>
-												<textarea name="message" id="message" rows="5"></textarea>
+											<div class="field" id="resultado">
+												
+												
 											</div>						
 									</ul>
 								</section>
@@ -108,6 +121,41 @@
 			<script src="{{ url_for('static',filename='scripts/breakpoints.min.js') }}"></script> 
 			<script src="{{ url_for('static',filename='scripts/util.js') }}"></script> 
 			<script src="{{ url_for('static',filename='scripts/main.js') }}"></script> 
+		
+			
+			
+			<script type="text/javascript">
+			$("form[name='csvimportdataform']").submit(function (event) {
+			  event.preventDefault();
+			  const formData = new FormData($(this)[0]);
+			  $.ajax({
+				type: 'POST',
+				url: '/upload-csv',
+				data: formData,
+				contentType: false,
+				cache: false,
+				processData: false,
+				success: function(data) {
+				  console.log("success");
+				}
+			  });
+			});
+			</script>
+		
+		<script>
+        
+
+        /*Send TextField*/
+			function sendText(){
+				$.post("/modelo", {
+  				  mytext : $('textarea#mytext').val(),
+				  mymodel: $("#mymodel option:selected").text()
+					}, function(msg){
+  					  $("#resultado").html(msg);
+						})	
+			}	
+				
+			</script>
 
 	</body>
 </html>
