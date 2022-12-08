@@ -32,7 +32,7 @@ def modelo():
 
 
 # Faz o Upload do CSV
-@app.route('/upload-csv', methods=['GET', 'POST'])
+@app.route('/upload-csv', methods=['POST'])
 def upload_csv():
     if 'csvfile' in request.files:
         file = request.files['csvfile']
@@ -43,9 +43,11 @@ def upload_csv():
             app.config.get('UPLOAD_FOLDER', 'files'),
             secure_filename(file.filename)
         )
+        df = pd.read_csv(dest)
         file.save(dest)
-        return '', 201
+        return '''{}'''.format(df), 201
     return '', 400
+   
 
 
 app.run()
