@@ -2,6 +2,7 @@ from flask import Flask, render_template, request,session
 from werkzeug.utils import secure_filename
 import pandas as pd
 import os
+from modelos.lstm.lstm import user_input
 
 
 app = Flask(__name__)
@@ -21,14 +22,32 @@ def modelo():
             #Aqui vai a função do modelo 1
             mytext = mytext.upper()
             
+            
         if mymodel == 'LSTM':
             #Aqui vai a função do modelo 2
-            mytext = mytext.lower()
+            mytext = user_input(mytext)
+            
             
 
          
         return '''
-                  <h1>Resultado: {}</h1><p>modelo escolhido: {}<p>'''.format(mytext, mymodel)
+                  <h2>Classificação</h2>
+<p>Modelos escolhido:{}</p>
+<table>
+  <tr>
+    <th>Segmento</th>
+    <th>Categoria</th>
+    <th>Produto</th>
+  </tr>
+  <tr>
+    <td>{}<</td>
+    <td>{}<</td>
+    <td>{}<</td>
+  </tr>
+  
+  
+</table> '''.format(mymodel,mytext[0],mytext[1],mytext[2] )
+
 
 
 # Faz o Upload do CSV
