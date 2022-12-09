@@ -37,16 +37,18 @@ def modelo():
   <tr>
     <th>Segmento</th>
     <th>Categoria</th>
+    <th>Subcategoria</th>
     <th>Produto</th>
   </tr>
   <tr>
-    <td>{}<</td>
-    <td>{}<</td>
-    <td>{}<</td>
+    <td><p>{}</p></td>
+    <td><p>{}</p></td>
+    <td><p>{}</p></td>
+    <td><p>{}</p></td>
   </tr>
   
   
-</table> '''.format(mymodel,mytext[0],mytext[1],mytext[2] )
+</table> '''.format(mymodel,mytext[0],mytext[1],mytext[2],mytext[3] )
 
 
 
