@@ -33,6 +33,7 @@ def load_model():
 model = load_model()
 MAX_SEQUENCE_LENGTH = 15
 
+#FAZ A CATEGORIZAÇÃO PARA TEXTO SIMPLES
 def user_input(usertext):
     text = usertext
     new_complaint = pre_process.transform(text)
@@ -44,5 +45,35 @@ def user_input(usertext):
     subcategoria = f'{label_subcategoria[np.argsort(pred[2].flatten())[::-1]][:3]}'
     produto = f'{label_produto[np.argsort(pred[3].flatten())[::-1]][:5]}'
     return segmento,categoria,subcategoria,produto
-   
 
+#FAZ A CATEGORIZAÇÃO DE ARQUIVOS.CSV   
+def user_input_csv(dt):
+
+    df = pd.DataFrame(
+            [],
+            columns=[
+                'nm_item',
+                'segmento',
+                'categoria',
+                'subcategoria',
+                'nm_product',
+            ],
+        )
+
+    for index, text in dt.iterrows():
+        text_processed = pre_process.transform(text['nm_item'])
+        seq = tokenizer.texts_to_sequences([text_processed])
+        padded = pad_sequences(seq, maxlen=MAX_SEQUENCE_LENGTH)
+        pred = model.predict(padded)
+        df = df.append(
+                    {
+                        'nm_item': text['nm_item'],
+                        'segmento': label_segmento[np.argmax(pred[0])],
+                        'categoria': label_categoria[np.argmax(pred[1])],
+                        'subcategoria': label_subcategoria[np.argmax(pred[2])],
+                        'nm_product': label_produto[np.argmax(pred[3])],
+                    },
+                    ignore_index=True,
+                )
+
+    return df

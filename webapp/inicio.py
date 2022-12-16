@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 import pandas as pd
 import os
 from modelos.lstm.lstm import user_input
+from modelos.lstm.lstm import user_input_csv
 
 
 app = Flask(__name__)
@@ -65,9 +66,12 @@ def upload_csv():
             secure_filename(file.filename)
         )
         file.save(dest)
-        df = pd.read_csv(dest)
         
-        return '''{}'''.format(df), 201
+        dt = pd.read_csv(dest, names=['nm_item'])
+        output = user_input_csv(dt)
+        
+        
+        return '''{}'''.format(output), 201
     return '', 400
    
 
