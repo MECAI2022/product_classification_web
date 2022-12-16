@@ -32,23 +32,23 @@ def modelo():
          
         return '''
                   <h2>Classificação</h2>
-<p>Modelos escolhido:{}</p>
-<table>
-  <tr>
-    <th>Segmento</th>
-    <th>Categoria</th>
-    <th>Subcategoria</th>
-    <th>Produto</th>
-  </tr>
-  <tr>
-    <td><p>{}</p></td>
-    <td><p>{}</p></td>
-    <td><p>{}</p></td>
-    <td><p>{}</p></td>
-  </tr>
-  
-  
-</table> '''.format(mymodel,mytext[0],mytext[1],mytext[2],mytext[3] )
+                    <p>Modelos escolhido:{}</p>
+                    <table>
+                    <tr>
+                        <th>Segmento</th>
+                        <th>Categoria</th>
+                        <th>Subcategoria</th>
+                        <th>Produto</th>
+                    </tr>
+                    <tr>
+                        <td><p>{}</p></td>
+                        <td><p>{}</p></td>
+                        <td><p>{}</p></td>
+                        <td><p>{}</p></td>
+                    </tr>
+                    
+                    
+                    </table> '''.format(mymodel,mytext[0],mytext[1],mytext[2],mytext[3] )
 
 
 
@@ -64,8 +64,9 @@ def upload_csv():
             app.config.get('UPLOAD_FOLDER', 'files'),
             secure_filename(file.filename)
         )
-        df = pd.read_csv(dest)
         file.save(dest)
+        df = pd.read_csv(dest)
+        
         return '''{}'''.format(df), 201
     return '', 400
    
