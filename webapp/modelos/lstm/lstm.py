@@ -52,11 +52,11 @@ def user_input_csv(dt):
     df = pd.DataFrame(
             [],
             columns=[
-                'nm_item',
-                'segmento',
-                'categoria',
-                'subcategoria',
-                'nm_product',
+                'Item',
+                'Segmento',
+                'Categoria',
+                'Subcategoria',
+                'Produto',
             ],
         )
 
@@ -67,11 +67,11 @@ def user_input_csv(dt):
         pred = model.predict(padded)
         df = df.append(
                     {
-                        'nm_item': text['nm_item'],
-                        'segmento': label_segmento[np.argmax(pred[0])],
-                        'categoria': label_categoria[np.argmax(pred[1])],
-                        'subcategoria': label_subcategoria[np.argmax(pred[2])],
-                        'nm_product': label_produto[np.argmax(pred[3])],
+                        'Item': text['nm_item'],
+                        'Segmento': label_segmento[np.argmax(pred[0])],
+                        'Categoria': label_categoria[np.argmax(pred[1])],
+                        'Subcategoria': label_subcategoria[np.argmax(pred[2])],
+                        'Produto': label_produto[np.argmax(pred[3])],
                     },
                     ignore_index=True,
                 )

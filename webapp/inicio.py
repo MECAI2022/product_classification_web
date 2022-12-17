@@ -4,6 +4,9 @@ import pandas as pd
 import os
 from modelos.lstm.lstm import user_input
 from modelos.lstm.lstm import user_input_csv
+from modelos.bert.bert_pipeline import user_input_bert
+from modelos.bert.bert_pipeline import ProductClassifier 
+
 
 
 app = Flask(__name__)
@@ -21,17 +24,14 @@ def modelo():
         
         if mymodel == 'Bert':
             #Aqui vai a função do modelo 1
-            mytext = mytext.upper()
+            mytext = user_input_bert(mytext)
+            return  mytext
             
             
         if mymodel == 'LSTM':
             #Aqui vai a função do modelo 2
             mytext = user_input(mytext)
-            
-            
-
-         
-        return '''
+            return '''
                   <h2>Classificação</h2>
                     <p>Modelos escolhido:{}</p>
                     <table>
@@ -50,6 +50,12 @@ def modelo():
                     
                     
                     </table> '''.format(mymodel,mytext[0],mytext[1],mytext[2],mytext[3] )
+           
+        return 0    
+            
+
+         
+   
 
 
 

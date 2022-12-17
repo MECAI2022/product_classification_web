@@ -53,9 +53,9 @@
 						<div class="inner">
 							<h2>Ferramenta de classificação</h2>
 							<select name="mymodel" id="mymodel">
-								<option value="">- Selecione o modelo -</option>
-								<option value="1">Bert </option>
 								<option value="2">LSTM</option>
+								<option value="1">Bert</option>
+								
 							
 							</select>
 							<Br>
@@ -139,7 +139,6 @@
 			  event.preventDefault();
 			  const formData = new FormData($(this)[0]);
 			  Pace.track(function(){
-
 			  $.ajax({
 				type: 'POST',
 				url: '/upload-csv',
@@ -150,6 +149,10 @@
 				success: function(data) {
 				  console.log("success");
 				  $('#resultado').html(data);
+				  $('html, body').animate({
+        			scrollTop: $("#resultado").offset().top
+    				}, 1000)
+				  
 				}
 			  });
 			});
@@ -166,6 +169,9 @@
 				  mymodel: $("#mymodel option:selected").text()
 					}, function(msg){
   					  $("#resultado").html(msg);
+						$('html, body').animate({
+        				scrollTop: $("#resultado").offset().top
+    					}, 1000)
 						})	
 			}	
 				
