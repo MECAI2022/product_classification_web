@@ -76,4 +76,4 @@ def user_input_csv(dt):
                     ignore_index=True,
                 )
 
-    return df
+    return df.to_html()

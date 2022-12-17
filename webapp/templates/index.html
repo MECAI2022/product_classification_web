@@ -11,6 +11,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ url_for('static',filename='styles/main.css') }}" /> 
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js" data-pace-options='{ "ajax": true }'></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
+		<link rel="stylesheet" href="{{ url_for('static',filename='styles/center-simple.css') }}" /> 
+		
 		
 	</head>
 	<body class="is-preload">
@@ -45,8 +49,17 @@
 
 				<!-- Three -->
 					<section id="three" class="wrapper style1 fade-up">
+					
 						<div class="inner">
-							<h2>Ferramenta</h2>
+							<h2>Ferramenta de classificação</h2>
+							<select name="mymodel" id="mymodel">
+								<option value="">- Selecione o modelo -</option>
+								<option value="1">Bert </option>
+								<option value="2">LSTM</option>
+							
+							</select>
+							<Br>
+							<label for="csvimportdataform">Faça o UPLOAD do seu CSV:</label>
 							<form name="csvimportdataform" id="csvimportdataform">
 								<input 
 									type="file" 
@@ -59,49 +72,46 @@
 									name="importdata" 
 									id="importdata" 
 									class="btn btn-info" 
-								>Carregar arquivo</button>
+								>Categorizar</button>
 							</form>
 							
-							<div class="split style2">
+							<div class=" style2">
 								<section>
 																
 									
-									<select name="mymodel" id="mymodel">
-											<option value="">- Selecione o modelo -</option>
-											<option value="1">Bert </option>
-											<option value="2">LSTM</option>
-										
-										</select>
-										<Br>
+									
 									
 									
 									<div class="fields">
 														
 										<div class="field">
 											<form >
-												<label for="mytext">Insira seu texto abaixo:</label>
+												<label for="mytext">Ou insira seu texto abaixo:</label>
 												<textarea id="mytext" name="mytext" cols="40" rows="5"></textarea>
 												<br>
-												<button type="button" class="button" onclick="sendText()">Analisar</button>
+												<button type="button" class="button" onclick="sendText()">Categorizar</button>
 										    </form>
 										</div>
 										
 									</div>
 								</section>
-								<section>
-									<ul class="contact">
-																					
-											<div class="field" id="resultado">
-												
-												
-											</div>						
-									</ul>
-								</section>
+							
 							</div>
+							<section>
+								<ul class="resultados">
+																				
+										<div class="field" id="resultado">
+											
+											
+										</div>						
+								</ul>
+							</section>	
 						</div>
 					</section>
+					
 
 			</div>
+			
 
 		<!-- Footer -->
 			<footer id="footer" class="wrapper style1-alt">
@@ -128,6 +138,8 @@
 			$("form[name='csvimportdataform']").submit(function (event) {
 			  event.preventDefault();
 			  const formData = new FormData($(this)[0]);
+			  Pace.track(function(){
+
 			  $.ajax({
 				type: 'POST',
 				url: '/upload-csv',
@@ -137,9 +149,10 @@
 				processData: false,
 				success: function(data) {
 				  console.log("success");
-				  $('#mytext').val(data);
+				  $('#resultado').html(data);
 				}
 			  });
+			});
 			});
 			</script>
 		
