@@ -91,3 +91,4 @@ ENV/
 .idea
 data
 processed
+webapp/modelos/bert/config/BERT_FINAL_MODELO.pth
