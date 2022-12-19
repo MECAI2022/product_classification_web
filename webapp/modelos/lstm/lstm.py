@@ -21,6 +21,7 @@ label_categoria = np.sort(np.array(produtos['categoria']))
 label_subcategoria = np.sort(np.array(produtos['subcategoria']))
 label_produto = np.sort(np.array(produtos['nm_product']))
 
+
 # Abrindo o Tokenizador
 with open('modelos/lstm/tokenizer_last.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
@@ -40,11 +41,21 @@ def user_input(usertext):
     seq = tokenizer.texts_to_sequences([new_complaint])
     padded = pad_sequences(seq, maxlen=MAX_SEQUENCE_LENGTH)
     pred = model.predict(padded)
-    segmento = f'{label_segmento[np.argmax(pred[0])]}'
-    categoria = f'{label_categoria[np.argsort(pred[1].flatten())[::-1]][:3]}'
-    subcategoria = f'{label_subcategoria[np.argsort(pred[2].flatten())[::-1]][:3]}'
-    produto = f'{label_produto[np.argsort(pred[3].flatten())[::-1]][:5]}'
-    return segmento,categoria,subcategoria,produto
+    segmento = label_segmento[np.argsort(pred[0].flatten())[::-1]][:5]
+    categoria = label_categoria[np.argsort(pred[1].flatten())[::-1]][:5]
+    subcategoria = label_subcategoria[np.argsort(pred[2].flatten())[::-1]][:5]
+    produto = label_produto[np.argsort(pred[3].flatten())[::-1]][:5]
+
+    # Criando o Data Frame
+    index_labels=['Top1','Top2','Top3','Top4', 'Top5']
+    labels = {
+        'segmento':segmento,
+        'categoria':categoria,
+        'subcategoria':subcategoria,
+        'produto':produto
+    }
+    df_product = pd.DataFrame(labels, index=index_labels)
+    return df_product.to_html()
 
 #FAZ A CATEGORIZAÇÃO DE ARQUIVOS.CSV   
 def user_input_csv(dt):

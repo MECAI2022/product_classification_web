@@ -31,25 +31,7 @@ def modelo():
         if mymodel == 'LSTM':
             #Aqui vai a função do modelo 2
             mytext = user_input(mytext)
-            return '''
-                  <h2>Classificação</h2>
-                    <p>Modelos escolhido:{}</p>
-                    <table>
-                    <tr>
-                        <th>Segmento</th>
-                        <th>Categoria</th>
-                        <th>Subcategoria</th>
-                        <th>Produto</th>
-                    </tr>
-                    <tr>
-                        <td><p>{}</p></td>
-                        <td><p>{}</p></td>
-                        <td><p>{}</p></td>
-                        <td><p>{}</p></td>
-                    </tr>
-                    
-                    
-                    </table> '''.format(mymodel,mytext[0],mytext[1],mytext[2],mytext[3] )
+            return  mytext
            
         return 0    
             
@@ -62,6 +44,7 @@ def modelo():
 # Faz o Upload do CSV
 @app.route('/upload-csv', methods=['POST'])
 def upload_csv():
+    mymodel = request.form.get('mymodel')
     if 'csvfile' in request.files:
         file = request.files['csvfile']
         if file.filename == '':
@@ -74,8 +57,10 @@ def upload_csv():
         file.save(dest)
         
         dt = pd.read_csv(dest, names=['nm_item'])
-        output = user_input_csv(dt)
         
+      
+        output = user_input_csv(dt)
+     
         
         
         return '''{}'''.format(output), 201
