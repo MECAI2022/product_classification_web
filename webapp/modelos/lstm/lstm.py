@@ -16,11 +16,10 @@ with open('modelos/lstm/product.json', 'r') as myfile:
     data=myfile.read()
 produtos = json.loads(data)
 
-label_segmento = np.sort(np.array(produtos['segmento']))
-label_categoria = np.sort(np.array(produtos['categoria']))
-label_subcategoria = np.sort(np.array(produtos['subcategoria']))
-label_produto = np.sort(np.array(produtos['nm_product']))
-
+label_segmento = np.array(produtos['segmento'])
+label_categoria = np.array(produtos['categoria'])
+label_subcategoria = np.array(produtos['subcategoria'])
+label_produto = np.array(produtos['nm_product'])
 
 # Abrindo o Tokenizador
 with open('modelos/lstm/tokenizer_last.pickle', 'rb') as handle:

@@ -24,7 +24,7 @@
 				<div class="inner">
 					<nav>
 						<ul>
-							<li><a href="#intro">ShortText </a></li>
+							<li><a href="#intro">Catalogador de produtos </a></li>
 							<li><a href="#three">Ferramenta</a></li>
 						</ul>
 					</nav>
@@ -39,7 +39,7 @@
 						
 						<div class="inner">
 							<img src="{{url_for('static', filename='imgs/logo.png')}}" width="200px" height="auto">
-							<h1>ShortText</h1>
+							<h1>Catalogador de produtos</h1>
 							<p>Desenvolvido por alunos do MECAI-ICMC-USP</p>
 							
 						</div>
@@ -131,6 +131,7 @@
 			<script src="{{ url_for('static',filename='scripts/breakpoints.min.js') }}"></script> 
 			<script src="{{ url_for('static',filename='scripts/util.js') }}"></script> 
 			<script src="{{ url_for('static',filename='scripts/main.js') }}"></script> 
+			<script src="{{ url_for('static',filename='scripts/table2csv.min.js') }}"></script> 
 		
 			
 			
@@ -152,8 +153,10 @@
 				  $('#resultado').html(data);
 				  $('html, body').animate({
         			scrollTop: $("#resultado").offset().top
-    				}, 1000)
-				  
+					}, 1000)
+					$("#resultado>table").table2csv({filename:'resultado.csv'
+});
+
 				}
 			  });
 			});
